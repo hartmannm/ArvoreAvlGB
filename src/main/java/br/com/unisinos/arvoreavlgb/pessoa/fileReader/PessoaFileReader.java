@@ -2,8 +2,9 @@ package br.com.unisinos.arvoreavlgb.pessoa.fileReader;
 
 import br.com.unisinos.arvoreavlgb.pessoa.Pessoa;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PessoaFileReader {
-    
+
     /** Índice - CPF */
     private static final int CPF_INDEX = 0;
     /** Índice - RG */
@@ -37,7 +38,8 @@ public class PessoaFileReader {
         String linha;
         SimpleDateFormat formater = new SimpleDateFormat(FORMATO_DATA_NASCIMENTO);
         // Abre o arquivo e inicia a leitura
-        try (BufferedReader csvReader = new BufferedReader(new FileReader(caminhoArquivo))) {
+        try (BufferedReader csvReader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(caminhoArquivo), "UTF-8"))) {
             // Lê as linhas do arquivo
             while ((linha = csvReader.readLine()) != null) {
                 lista.add(parsePessoa(linha, formater));
@@ -70,5 +72,5 @@ public class PessoaFileReader {
         pessoa.setDataNascimento(formater.parse(pessoaArray[DATA_NASC_INDEX]));
         return pessoa;
     }
-    
+
 }
