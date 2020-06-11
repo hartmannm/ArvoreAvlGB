@@ -87,7 +87,7 @@ public class No<T> implements Comparable<No<T>> {
     }
 
     @Override
-    public int compareTo(No no) {
+    public int compareTo(No<T> no) {
         int resultado = 0;
         if (valor instanceof String) {
             resultado = ((String) no.getValor()).compareTo((String) valor);
@@ -147,9 +147,9 @@ public class No<T> implements Comparable<No<T>> {
 
     }
 
-    public No apagar(No no) {
+    public No<T> apagar(No<T> no) {
         if (this.compareTo(no) > 0) {
-            No aux = noDireito.apagar(no);
+            No<T> aux = noDireito.apagar(no);
             if (aux == noDireito) {
                 noDireito = null;
             } else if (aux != null) {
@@ -157,7 +157,7 @@ public class No<T> implements Comparable<No<T>> {
                 noDireito.calculaAltura();
             }
         } else if (this.compareTo(no) < 0) {
-            No aux = noEsquerdo.apagar(no);
+            No<T> aux = noEsquerdo.apagar(no);
             if (aux == noEsquerdo) {
                 noEsquerdo = null;
             } else if (aux != null) {
@@ -172,7 +172,7 @@ public class No<T> implements Comparable<No<T>> {
 
                 } else {
                     this.valor = (T) (noDireito.getNoEsquerdo()).getValor();
-                    noDireito.apagar(new No(this.valor));
+                    noDireito.apagar(new No<T>(this.valor));
                 }
             } else if (noEsquerdo != null) {
                 return noEsquerdo;
@@ -185,7 +185,7 @@ public class No<T> implements Comparable<No<T>> {
         return this.executaBalanceamento();
     }
 
-    public No inserir(No no) {
+    public No<T> inserir(No<T> no) {
         if (this.compareTo(no) == 0) {
             return null;
         }
@@ -193,7 +193,7 @@ public class No<T> implements Comparable<No<T>> {
             if (noDireito == null) {
                 noDireito = no;
             } else {
-                No aux = noDireito.inserir(no);
+                No<T> aux = noDireito.inserir(no);
                 if (aux != null) {
                     noDireito = aux;
                 }
@@ -202,7 +202,7 @@ public class No<T> implements Comparable<No<T>> {
             if (noEsquerdo == null) {
                 noEsquerdo = no;
             } else {
-                No aux = noEsquerdo.inserir(no);
+                No<T> aux = noEsquerdo.inserir(no);
                 if (aux != null) {
                     noEsquerdo = aux;
                 }
@@ -211,8 +211,8 @@ public class No<T> implements Comparable<No<T>> {
         return this.executaBalanceamento();
     }
 
-    private No rotacaoEsquerda() {
-        No temp = noDireito;
+    private No<T> rotacaoEsquerda() {
+        No<T> temp = noDireito;
         if (noDireito.getNoEsquerdo() == null) {
             noDireito.setNoEsquerdo(this);
             this.noDireito = null;
@@ -225,8 +225,8 @@ public class No<T> implements Comparable<No<T>> {
         return temp;
     }
 
-    private No rotacaoDireita() {
-        No temp = noEsquerdo;
+    private No<T> rotacaoDireita() {
+        No<T> temp = noEsquerdo;
         if (noEsquerdo.getNoDireito() == null) {
             noEsquerdo.setNoDireito(this);
             this.noEsquerdo = null;
@@ -308,18 +308,40 @@ public class No<T> implements Comparable<No<T>> {
      * @return Long
      */
     public Integer buscaPorCpf(Long cpf) {
-        // Se o cpf for igual ao valor do nó
-        if (cpf.equals(this.valor)) {
-            return this.indice;
-        } else if (possuiNoEsquerdo()) {
-            // Busca no nó esquerdo, se existir
-            return noEsquerdo.buscaPorCpf(cpf);
-        } else if (possuiNoDireito()) {
-            // Busca no nó direito, se existir
-            return noDireito.buscaPorCpf(cpf);
+        Long valorAux = Long.valueOf(this.valor.toString());
+        if (cpf.equals(valorAux)) {
+            return indice;
+        } else if (cpf < valorAux) {
+            if (possuiNoEsquerdo()) {
+                return noEsquerdo.buscaPorCpf(cpf);
+            } else {
+                return null;
+            }
+        } else if (cpf > valorAux) {
+            if (possuiNoDireito()) {
+                return noDireito.buscaPorCpf(cpf);
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
+        
+        
+        
+        
+//        // Se o cpf for igual ao valor do nó
+//        if (cpf.equals(this.valor)) {
+//            return this.indice;
+//        } else if (possuiNoEsquerdo()) {
+//            // Busca no nó esquerdo, se existir
+//            return noEsquerdo.buscaPorCpf(cpf);
+//        } else if (possuiNoDireito()) {
+//            // Busca no nó direito, se existir
+//            return noDireito.buscaPorCpf(cpf);
+//        } else {
+//            return null;
+//        }
     }
 
     public void percursoPreOrdem(List<Integer> lista) {

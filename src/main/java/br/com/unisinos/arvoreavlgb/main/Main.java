@@ -25,7 +25,7 @@ public class Main {
                 arvoreDataNascimento.inserir(pessoa.getDataNascimento(), indice);
             });
             
-            arvoreNome.percursoEmOrdem();
+            System.out.println("");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

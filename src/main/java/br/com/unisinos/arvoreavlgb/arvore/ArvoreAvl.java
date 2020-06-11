@@ -26,17 +26,17 @@ public class ArvoreAvl<T> {
         }
     }
 
-    public void inserir(T elemento) {
-        No temp = new No(elemento);
-        if (root == null) {
-            root = temp;
-        } else {
-            temp = root.inserir(temp);
-        }
-        if (temp != null) {
-            root = temp;
-        }
-    }
+//    public void inserir(T elemento) {
+//        No temp = new No(elemento);
+//        if (root == null) {
+//            root = temp;
+//        } else {
+//            temp = root.inserir(temp);
+//        }
+//        if (temp != null) {
+//            root = temp;
+//        }
+//    }
 
     public void inserir(T elemento, Integer indice) {
         No temp = new No(elemento, indice);
