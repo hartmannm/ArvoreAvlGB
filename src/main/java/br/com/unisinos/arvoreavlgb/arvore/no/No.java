@@ -324,29 +324,29 @@ public class No<T> implements Comparable<No<T>> {
 
     public void percursoPreOrdem(List<Integer> lista) {
         lista.add(this.indice);
-        if (noEsquerdo != null) {
+        if (possuiNoEsquerdo()) {
             noEsquerdo.percursoPreOrdem(lista);
         }
-        if (noDireito != null) {
+        if (possuiNoDireito()) {
             noDireito.percursoPreOrdem(lista);
         }
     }
 
     public void percursoEmOrdem(List<Integer> lista) {
-        if (noEsquerdo != null) {
+        if (possuiNoEsquerdo()) {
             noEsquerdo.percursoEmOrdem(lista);
         }
         lista.add(this.indice);
-        if (noDireito != null) {
+        if (possuiNoDireito()) {
             noDireito.percursoEmOrdem(lista);
         }
     }
 
     public void percursoPosOrdem(List<Integer> lista) {
-        if (noEsquerdo != null) {
+        if (possuiNoEsquerdo()) {
             noEsquerdo.percursoPosOrdem(lista);
         }
-        if (noDireito != null) {
+        if (possuiNoDireito()) {
             noDireito.percursoPosOrdem(lista);
         }
         lista.add(this.indice);
