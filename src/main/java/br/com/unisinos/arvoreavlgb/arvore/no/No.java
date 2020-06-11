@@ -62,8 +62,8 @@ public class No<T> implements Comparable<No<T>> {
     }
 
     private void calculaFatorBalancemanto() {
-        int alturaEsquerda = possuiNoEsquerdo() ? noEsquerdo.getAltura(): 0;
-        int alturaDireita = possuiNoDireito() ? noDireito.getAltura(): 0;
+        int alturaEsquerda = possuiNoEsquerdo() ? noEsquerdo.getAltura() : 0;
+        int alturaDireita = possuiNoDireito() ? noDireito.getAltura() : 0;
         this.fatorBalanceamento = alturaEsquerda - alturaDireita;
     }
 
@@ -118,22 +118,28 @@ public class No<T> implements Comparable<No<T>> {
         this.calculaFatorBalancemanto();
         if (fatorBalanceamento > 1) {
             noEsquerdo.calculaFatorBalancemanto();
-            if (noEsquerdo.getFatorBalanceamento() > 0) {// simple right rotation
+            if (noEsquerdo.getFatorBalanceamento() > 0) {
+                // Rotação simples a direita
                 return this.rotacaoDireita();
-            } else if (noEsquerdo.getFatorBalanceamento() < 0) {// double right rotation
+            } else if (noEsquerdo.getFatorBalanceamento() < 0) {
+                // Rotação dupla a direita
                 noEsquerdo = noEsquerdo.rotacaoEsquerda();
                 return this.rotacaoDireita();
-            } else if (noEsquerdo.getFatorBalanceamento() == 0) {// double right rotation
+            } else if (noEsquerdo.getFatorBalanceamento() == 0) {
+                // Rotação dupla a direita
                 return this.rotacaoDireita();
             }
         } else if (fatorBalanceamento < -1) {
             noDireito.calculaFatorBalancemanto();
-            if (noDireito.getFatorBalanceamento() < 0) {// simple left rotation
+            if (noDireito.getFatorBalanceamento() < 0) {
+                // Rotação simples a esquerda
                 return this.rotacaoEsquerda();
-            } else if (noDireito.getFatorBalanceamento() > 0) {// double left rotation
+            } else if (noDireito.getFatorBalanceamento() > 0) {
+                // Rotação dupla a esquerda
                 noDireito = noDireito.rotacaoDireita();
                 return this.rotacaoEsquerda();
-            } else if (noDireito.getFatorBalanceamento() == 0) {// double right rotation
+            } else if (noDireito.getFatorBalanceamento() == 0) {
+                // Rotação dupla a esquerda
                 return this.rotacaoEsquerda();
             }
         }
@@ -181,9 +187,9 @@ public class No<T> implements Comparable<No<T>> {
 
     public No inserir(No no) {
         if (this.compareTo(no) == 0) {
-            return null;// IF FOUND ELEMENT
+            return null;
         }
-        if (this.compareTo(no) > 0) {// IF GREATER
+        if (this.compareTo(no) > 0) {
             if (noDireito == null) {
                 noDireito = no;
             } else {
@@ -192,7 +198,7 @@ public class No<T> implements Comparable<No<T>> {
                     noDireito = aux;
                 }
             }
-        } else if (this.compareTo(no) < 0) {// IF SMALLER
+        } else if (this.compareTo(no) < 0) {
             if (noEsquerdo == null) {
                 noEsquerdo = no;
             } else {
@@ -252,7 +258,6 @@ public class No<T> implements Comparable<No<T>> {
 //            return null;
 //        }
 //    }
-
     /**
      * Preenche uma lista com os dados que se encaixam no filtro de datas
      *
@@ -298,7 +303,7 @@ public class No<T> implements Comparable<No<T>> {
 
     /**
      * Retorna o indice do nó caso o valor seja igual ao CPF informado
-     * 
+     *
      * @param cpf CPF
      * @return Long
      */
@@ -317,35 +322,34 @@ public class No<T> implements Comparable<No<T>> {
         }
     }
 
-    public void percursoEmOrdem() {
+    public void percursoPreOrdem(List<Integer> lista) {
+        lista.add(this.indice);
         if (noEsquerdo != null) {
-            noEsquerdo.percursoEmOrdem();
+            noEsquerdo.percursoPreOrdem(lista);
         }
-        System.out.print(valor + " ");
         if (noDireito != null) {
-            noDireito.percursoEmOrdem();
+            noDireito.percursoPreOrdem(lista);
         }
     }
 
-    public void percursoPosOrdem() {
+    public void percursoEmOrdem(List<Integer> lista) {
         if (noEsquerdo != null) {
-            noEsquerdo.percursoPosOrdem();
+            noEsquerdo.percursoEmOrdem(lista);
         }
+        lista.add(this.indice);
         if (noDireito != null) {
-            noDireito.percursoPosOrdem();
+            noDireito.percursoEmOrdem(lista);
         }
-        System.out.print(valor + " ");
     }
 
-    public void percursoPreOrdem() {
-        System.out.print(valor + " ");
-
+    public void percursoPosOrdem(List<Integer> lista) {
         if (noEsquerdo != null) {
-            noEsquerdo.percursoPreOrdem();
+            noEsquerdo.percursoPosOrdem(lista);
         }
-
         if (noDireito != null) {
-            noDireito.percursoPreOrdem();
+            noDireito.percursoPosOrdem(lista);
         }
+        lista.add(this.indice);
     }
+
 }

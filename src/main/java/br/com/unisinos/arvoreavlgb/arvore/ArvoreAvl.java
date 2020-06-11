@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 public class ArvoreAvl<T> {
+    
+    private static final String ERRO_ARVORE_VAZIA = "A árvore está vazia!";
 
     private No root;
 
@@ -76,29 +78,33 @@ public class ArvoreAvl<T> {
         return root.buscaPorCpf(cpf);
     }
 
-    public void percursoEmOrdem() {
+    public void percursoPreOrdem() {
+        // Se a árvore possui dados
         if (root != null) {
-            root.percursoEmOrdem();
+            List<Integer> lista = new ArrayList();
+            root.percursoPreOrdem(lista);
         } else {
-            System.out.println("This tree is empty");
+            System.out.println(ERRO_ARVORE_VAZIA);
         }
-        System.out.println();
+    }
+    
+    public void percursoEmOrdem() {
+        // Se a árvore possui dados
+        if (root != null) {
+            List<Integer> lista = new ArrayList();
+            root.percursoEmOrdem(lista);
+        } else {
+            System.out.println(ERRO_ARVORE_VAZIA);
+        }
     }
 
     public void percursoPosOrdem() {
+        // Se a árvore possui dados
         if (root != null) {
-            root.percursoPosOrdem();
+            List<Integer> lista = new ArrayList();
+            root.percursoPosOrdem(lista);
         } else {
-            System.out.println("This tree is empty");
-        }
-        System.out.println();
-    }
-
-    public void percursoPreOrdem() {
-        if (root != null) {
-            root.percursoPreOrdem();
-        } else {
-            System.out.println("This tree is empty");
+            System.out.println(ERRO_ARVORE_VAZIA);
         }
     }
     
