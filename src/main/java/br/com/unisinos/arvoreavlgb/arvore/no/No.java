@@ -147,44 +147,6 @@ public class No<T> implements Comparable<No<T>> {
 
     }
 
-    public No<T> apagar(No<T> no) {
-        if (this.compareTo(no) > 0) {
-            No<T> aux = noDireito.apagar(no);
-            if (aux == noDireito) {
-                noDireito = null;
-            } else if (aux != null) {
-                noDireito = aux;
-                noDireito.calculaAltura();
-            }
-        } else if (this.compareTo(no) < 0) {
-            No<T> aux = noEsquerdo.apagar(no);
-            if (aux == noEsquerdo) {
-                noEsquerdo = null;
-            } else if (aux != null) {
-                noEsquerdo = aux;
-                noEsquerdo.calculaAltura();
-            }
-        } else if (this.compareTo(no) == 0) {
-            if (noDireito != null) {
-                if (noDireito.getNoEsquerdo() == null) {
-                    noDireito.setNoEsquerdo(this.noEsquerdo);
-                    return noDireito;
-
-                } else {
-                    this.valor = (T) (noDireito.getNoEsquerdo()).getValor();
-                    noDireito.apagar(new No<T>(this.valor));
-                }
-            } else if (noEsquerdo != null) {
-                return noEsquerdo;
-
-            } else {
-                return this;
-            }
-
-        }
-        return this.executaBalanceamento();
-    }
-
     public No<T> inserir(No<T> no) {
         if (this.compareTo(no) == 0) {
             return null;
@@ -239,25 +201,6 @@ public class No<T> implements Comparable<No<T>> {
         return temp;
     }
 
-//    public No busca(No no) {
-//        if (this.compareTo(no) == 0) {
-//            return this;
-//        } else if (this.compareTo(no) < 0) {
-//            if (noEsquerdo != null) {
-//                return noEsquerdo.busca(no);
-//            } else {
-//                return null;
-//            }
-//        } else if (this.compareTo(no) > 0) {
-//            if (noDireito != null) {
-//                return noDireito.busca(no);
-//            } else {
-//                return null;
-//            }
-//        } else {
-//            return null;
-//        }
-//    }
     /**
      * Preenche uma lista com os dados que se encaixam no filtro de datas
      *
@@ -292,7 +235,7 @@ public class No<T> implements Comparable<No<T>> {
             noEsquerdo.buscaPorNome(filtroPesquisa, lista);
         }
         // Se o nome inicia com o valor pesquisado
-        if (((String) this.valor).startsWith(filtroPesquisa)) {
+        if (((String) this.valor).toLowerCase().startsWith(filtroPesquisa.toLowerCase())) {
             lista.add(this.indice);
         }
         // Se possui nó direito

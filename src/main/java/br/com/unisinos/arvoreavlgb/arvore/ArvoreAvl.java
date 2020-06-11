@@ -16,28 +16,6 @@ public class ArvoreAvl<T> {
 
     private No root;
 
-    public void apagar(T elemento) {
-        No temp = root.apagar(new No(elemento));
-        if (temp == root) {
-            this.root = null;
-        } else if (temp != null) {
-            root = temp;
-            root.executaBalanceamento();
-        }
-    }
-
-//    public void inserir(T elemento) {
-//        No temp = new No(elemento);
-//        if (root == null) {
-//            root = temp;
-//        } else {
-//            temp = root.inserir(temp);
-//        }
-//        if (temp != null) {
-//            root = temp;
-//        }
-//    }
-
     public void inserir(T elemento, Integer indice) {
         No temp = new No(elemento, indice);
         if (root == null) {
@@ -50,15 +28,6 @@ public class ArvoreAvl<T> {
             root = temp;
         }
     }
-
-//    public No busca(T element) {
-//        if (root != null) {
-//            return root.busca(new No(element));
-//        } else {
-//            System.out.println("This tree is empty");
-//            return null;
-//        }
-//    }
 
     public List<Integer> buscaPorData(Date dataInicial, Date dataFinal) {
         List<Integer> list = new ArrayList();
