@@ -7,7 +7,7 @@ public class No<T> implements Comparable<No<T>> {
 
     private int altura;
     private int fatorBalanceamento;
-    private T valor;
+    private final T valor;
     private Integer indice;
     private No<T> noEsquerdo;
     private No<T> noDireito;
@@ -151,7 +151,7 @@ public class No<T> implements Comparable<No<T>> {
         if (this.compareTo(no) == 0) {
             return null;
         }
-        if (this.compareTo(no) > 0) {
+        if (this.compareTo(no) < 0) {
             if (noDireito == null) {
                 noDireito = no;
             } else {
@@ -160,7 +160,7 @@ public class No<T> implements Comparable<No<T>> {
                     noDireito = aux;
                 }
             }
-        } else if (this.compareTo(no) < 0) {
+        } else if (this.compareTo(no) > 0) {
             if (noEsquerdo == null) {
                 noEsquerdo = no;
             } else {
@@ -269,22 +269,6 @@ public class No<T> implements Comparable<No<T>> {
         } else {
             return null;
         }
-        
-        
-        
-        
-//        // Se o cpf for igual ao valor do nó
-//        if (cpf.equals(this.valor)) {
-//            return this.indice;
-//        } else if (possuiNoEsquerdo()) {
-//            // Busca no nó esquerdo, se existir
-//            return noEsquerdo.buscaPorCpf(cpf);
-//        } else if (possuiNoDireito()) {
-//            // Busca no nó direito, se existir
-//            return noDireito.buscaPorCpf(cpf);
-//        } else {
-//            return null;
-//        }
     }
 
     public void percursoPreOrdem(List<Integer> lista) {
