@@ -87,7 +87,7 @@ public class ArvoreAvl<T> {
      * @param cpf CPF
      * @return Integer
      */
-    public Integer buscaporCpf(Long cpf) {
+    public Integer buscaPorCpf(Long cpf) {
         return root.buscaPorCpf(cpf);
     }
 

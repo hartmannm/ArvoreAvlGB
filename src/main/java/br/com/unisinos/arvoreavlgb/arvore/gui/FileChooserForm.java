@@ -6,14 +6,15 @@
 package br.com.unisinos.arvoreavlgb.arvore.gui;
 
 import br.com.unisinos.arvoreavlgb.arvore.gui.facade.FileChooseFormFacade;
-import br.com.unisinos.arvoreavlgb.arvore.gui.utils.GuiUtils;
+import br.com.unisinos.arvoreavlgb.arvore.utils.GuiUtils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
  * Componente responsável pela seleção de arquivos
- * @author Marcello Augusto Gava 
+ *
+ * @author Marcello Augusto Gava
  * @author Mauricio Hartmann
  */
 public class FileChooserForm extends JFrame {
@@ -138,14 +139,18 @@ public class FileChooserForm extends JFrame {
             GuiUtils.exibeAlerta(this, ERRO_SELECAO_ARQUIVO);
             return;
         }
-        fileChooserFacade.exibeJanelaConsulta(fileChooserField.getText());
-        this.dispose();
+        try {
+            fileChooserFacade.exibeJanelaConsulta(fileChooserField.getText());
+            this.dispose();
+        } catch (Exception e) {
+            GuiUtils.exibeAlerta(this, e.getMessage());
+        }
     }//GEN-LAST:event_fileChooserOkButtonActionPerformed
 
     /**
      * Executa no clique do botão de seleção de arquivo
      *
-     * @param evt
+     * @param evt Evento
      */
     private void fileChooserModalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserModalButtonActionPerformed
         try {

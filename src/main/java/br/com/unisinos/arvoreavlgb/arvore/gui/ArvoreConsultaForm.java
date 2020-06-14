@@ -5,31 +5,62 @@
  */
 package br.com.unisinos.arvoreavlgb.arvore.gui;
 
+import br.com.unisinos.arvoreavlgb.arvore.ArvoreAvl;
+import br.com.unisinos.arvoreavlgb.arvore.gui.facade.ArvoreConsultaFormFacade;
+import br.com.unisinos.arvoreavlgb.arvore.utils.DateUtils;
+import br.com.unisinos.arvoreavlgb.arvore.utils.GuiUtils;
+import br.com.unisinos.arvoreavlgb.pessoa.Pessoa;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+
 /**
+ * Componente para consulta dos dados do arquivo
  *
- * @author mauricio
+ * @author Marcello Augusto Gava
+ * @author Mauricio Hartmann
  */
 public class ArvoreConsultaForm extends javax.swing.JFrame {
 
-    /** Arquivo a ser carregado */
-    private String caminhoArquivo;
+    /** Mensagem de erro - CPF inválido */
+    private static final String MENSAGEM_ERRO_CPF = "Por favor, informe um CPF válido!";
+    /** Mensagem de erro - Nome inválido */
+    private static final String MENSAGEM_ERRO_NOME = "Por favor, preencha o campo nome!";
+    /** Mensagem de erro - Datas de nascimento inválidas */
+    private static final String MENSAGEM_ERRO_DATA = "Por favor, informe datas válidas!";
+    /** Mensagem de erro - Nenhuma árvore selecionada para percurso */
+    private static final String MENSAGEM_ERRO_CHECKBOX_SELECAO = "Por favor, selecione uma árvore!";
+    /** Facade com as lógicas do componente */
+    private final ArvoreConsultaFormFacade arvoreConsultaFormFacade;
+    /** Lista de pessoas utilizada no componente */
+    private List<Pessoa> listaPessoas;
+    /** Árvore indexada pelo CPF */
+    private final ArvoreAvl<Long> arvoreCpf;
+    /** Árvore indexada pelo nome */
+    private final ArvoreAvl<String> arvoreNome;
+    /** Árvore indexada pelo sobrenome */
+    private final ArvoreAvl<Date> arvoreDataNascimento;
 
-    /**
-     * Método construtor
-     */
     public ArvoreConsultaForm() {
         initComponents();
         this.setLocationRelativeTo(null);
-        System.out.println(caminhoArquivo);
+        this.arvoreConsultaFormFacade = new ArvoreConsultaFormFacade();
+        this.arvoreCpf = new ArvoreAvl<>();
+        this.arvoreNome = new ArvoreAvl<>();
+        this.arvoreDataNascimento = new ArvoreAvl<>();
+        this.arvoreConsultaFormFacade.resetaTabela(pessoasTable);
     }
 
     /**
-     * Define o caminho do arquivo a ser carregado
-     * 
-     * @param caminhoArquivo Caminho do arquivo
+     * Define a lista de pessoas utilizada no componente
+     *
+     * @param listaPessoas Lista de pessoas
      */
-    public void setCaminhoArquivo(String caminhoArquivo) {
-        this.caminhoArquivo = caminhoArquivo;
+    public void setListaPessoas(List<Pessoa> listaPessoas) {
+        this.listaPessoas = listaPessoas;
+        // Popula as árvores a partir da lista
+        arvoreConsultaFormFacade.populaArvores(this.listaPessoas, arvoreCpf,
+                arvoreNome, arvoreDataNascimento);
     }
 
     /**
@@ -41,21 +72,396 @@ public class ArvoreConsultaForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        percursoCheckboxGroup = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
+        pesquisaPanel = new javax.swing.JPanel();
+        nomeLabel = new javax.swing.JLabel();
+        cpflabel = new javax.swing.JLabel();
+        nomeField = new javax.swing.JTextField();
+        dataNascimentoLabel = new javax.swing.JLabel();
+        dataInicialLabel = new javax.swing.JLabel();
+        dataFinalLabel = new javax.swing.JLabel();
+        dataInicialField = new javax.swing.JFormattedTextField();
+        cpfField = new javax.swing.JFormattedTextField();
+        cpfActionButton = new javax.swing.JButton();
+        dataNascimentoActionButton = new javax.swing.JButton();
+        nomeActionButton = new javax.swing.JButton();
+        dataFinalField = new javax.swing.JFormattedTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        pessoasTable = new javax.swing.JTable();
+        percursoPanel = new javax.swing.JPanel();
+        percursoCpfCheck = new javax.swing.JRadioButton();
+        percursoNomeCheck = new javax.swing.JRadioButton();
+        percursoDataNascCheck = new javax.swing.JRadioButton();
+        percursoPreOrdemButton = new javax.swing.JButton();
+        percursoPosOrdemButton = new javax.swing.JButton();
+        percursoOrdemButton = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        pesquisaPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pesquisa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
+
+        nomeLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        nomeLabel.setText("Nome");
+
+        cpflabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        cpflabel.setText("CPF");
+
+        dataNascimentoLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        dataNascimentoLabel.setText("Data de nascimento");
+
+        dataInicialLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        dataInicialLabel.setText("Inicial");
+
+        dataFinalLabel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        dataFinalLabel.setText("Final");
+
+        try {
+            dataInicialField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        dataInicialField.setToolTipText("");
+
+        try {
+            cpfField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        cpfActionButton.setBackground(new java.awt.Color(255, 255, 255));
+        cpfActionButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons/search-icon.png"))); // NOI18N
+        cpfActionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cpfActionButtonActionPerformed(evt);
+            }
+        });
+
+        dataNascimentoActionButton.setBackground(new java.awt.Color(255, 255, 255));
+        dataNascimentoActionButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons/search-icon.png"))); // NOI18N
+        dataNascimentoActionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataNascimentoActionButtonActionPerformed(evt);
+            }
+        });
+
+        nomeActionButton.setBackground(new java.awt.Color(255, 255, 255));
+        nomeActionButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons/search-icon.png"))); // NOI18N
+        nomeActionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nomeActionButtonActionPerformed(evt);
+            }
+        });
+
+        try {
+            dataFinalField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        dataFinalField.setToolTipText("");
+
+        javax.swing.GroupLayout pesquisaPanelLayout = new javax.swing.GroupLayout(pesquisaPanel);
+        pesquisaPanel.setLayout(pesquisaPanelLayout);
+        pesquisaPanelLayout.setHorizontalGroup(
+            pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pesquisaPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pesquisaPanelLayout.createSequentialGroup()
+                        .addGroup(pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pesquisaPanelLayout.createSequentialGroup()
+                                .addComponent(dataInicialLabel)
+                                .addGap(13, 13, 13)
+                                .addComponent(dataInicialField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dataFinalLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dataFinalField, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pesquisaPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cpfField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nomeField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dataNascimentoActionButton)
+                            .addGroup(pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(nomeActionButton)
+                                .addComponent(cpfActionButton))))
+                    .addGroup(pesquisaPanelLayout.createSequentialGroup()
+                        .addGroup(pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cpflabel)
+                            .addComponent(nomeLabel)
+                            .addComponent(dataNascimentoLabel))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pesquisaPanelLayout.setVerticalGroup(
+            pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pesquisaPanelLayout.createSequentialGroup()
+                .addComponent(cpflabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cpfActionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nomeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nomeField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nomeActionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dataNascimentoLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pesquisaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dataFinalLabel)
+                        .addComponent(dataFinalField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dataInicialField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dataInicialLabel))
+                    .addComponent(dataNascimentoActionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        pessoasTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        pessoasTable.setEditingRow(1);
+        jScrollPane2.setViewportView(pessoasTable);
+
+        percursoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Percurso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
+
+        percursoCheckboxGroup.add(percursoCpfCheck);
+        percursoCpfCheck.setText("Árvore CPF");
+
+        percursoCheckboxGroup.add(percursoNomeCheck);
+        percursoNomeCheck.setText("Árvore nome");
+
+        percursoCheckboxGroup.add(percursoDataNascCheck);
+        percursoDataNascCheck.setText("Árvore Data de Nascimento");
+
+        percursoPreOrdemButton.setBackground(new java.awt.Color(255, 255, 255));
+        percursoPreOrdemButton.setText("Percurso pré-ordem");
+        percursoPreOrdemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                percursoPreOrdemButtonActionPerformed(evt);
+            }
+        });
+
+        percursoPosOrdemButton.setBackground(new java.awt.Color(255, 255, 255));
+        percursoPosOrdemButton.setText("Percurso pós-ordem");
+        percursoPosOrdemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                percursoPosOrdemButtonActionPerformed(evt);
+            }
+        });
+
+        percursoOrdemButton.setBackground(new java.awt.Color(255, 255, 255));
+        percursoOrdemButton.setText("Percurso em ordem");
+        percursoOrdemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                percursoOrdemButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout percursoPanelLayout = new javax.swing.GroupLayout(percursoPanel);
+        percursoPanel.setLayout(percursoPanelLayout);
+        percursoPanelLayout.setHorizontalGroup(
+            percursoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(percursoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(percursoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(percursoPanelLayout.createSequentialGroup()
+                        .addComponent(percursoCpfCheck)
+                        .addGap(18, 18, 18)
+                        .addComponent(percursoNomeCheck)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(percursoDataNascCheck))
+                    .addGroup(percursoPanelLayout.createSequentialGroup()
+                        .addComponent(percursoPreOrdemButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(percursoOrdemButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(percursoPosOrdemButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        percursoPanelLayout.setVerticalGroup(
+            percursoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(percursoPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(percursoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(percursoCpfCheck)
+                    .addComponent(percursoNomeCheck)
+                    .addComponent(percursoDataNascCheck))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(percursoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(percursoPreOrdemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(percursoOrdemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(percursoPosOrdemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jScrollPane2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(percursoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pesquisaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(pesquisaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(percursoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Executa no clique do botão de pesquisa por CPF
+     *
+     * @param evt Evento
+     */
+    private void cpfActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpfActionButtonActionPerformed
+        // Se o CPF é inválido
+        if (!arvoreConsultaFormFacade.isValorCampoCpfValido(cpfField.getText())) {
+            GuiUtils.exibeAlerta(this, MENSAGEM_ERRO_CPF);
+        } else {
+            this.arvoreConsultaFormFacade.buscaPorCpf(Long.valueOf(cpfField.getText()),
+                    arvoreCpf, pessoasTable, listaPessoas);
+        }
+    }//GEN-LAST:event_cpfActionButtonActionPerformed
+
+    /**
+     * Executa no clique do botão de pesquisa por nome
+     *
+     * @param evt Evento
+     */
+    private void nomeActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeActionButtonActionPerformed
+        // Se o nome é inválido
+        if (!arvoreConsultaFormFacade.isValorCampoNomeValido(nomeField.getText())) {
+            GuiUtils.exibeAlerta(this, MENSAGEM_ERRO_NOME);
+        } else {
+            this.arvoreConsultaFormFacade.buscaPorNome(nomeField.getText().trim(), arvoreNome,
+                    pessoasTable, listaPessoas);
+        }
+    }//GEN-LAST:event_nomeActionButtonActionPerformed
+
+    /**
+     * Executa no clique do botão de pesquisa por data de nascimento
+     *
+     * @param evt Evento
+     */
+    private void dataNascimentoActionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataNascimentoActionButtonActionPerformed
+        try {
+            Date dataInicial = DateUtils.getDataFromString(dataInicialField.getText());
+            Date dataFinal = DateUtils.getDataFromString(dataFinalField.getText());
+            this.arvoreConsultaFormFacade.buscaPorDataNascimento(dataInicial, dataFinal,
+                    arvoreDataNascimento, pessoasTable, listaPessoas);
+        } catch (ParseException e) {
+            GuiUtils.exibeAlerta(this, MENSAGEM_ERRO_DATA);
+        }
+    }//GEN-LAST:event_dataNascimentoActionButtonActionPerformed
+
+    /**
+     * Executa no clique do botão de percurso em pré-ordem
+     *
+     * @param evt Evento
+     */
+    private void percursoPreOrdemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_percursoPreOrdemButtonActionPerformed
+        // Se nenhuma árvore está selecionada
+        if (!arvoreConsultaFormFacade.isCheckboxSelected(percursoCheckboxGroup)) {
+            GuiUtils.exibeAlerta(this, MENSAGEM_ERRO_CHECKBOX_SELECAO);
+        } else {
+            List<Integer> resultadoPercurso = getArvorePercursoSelecionada().percursoPreOrdem();
+            arvoreConsultaFormFacade.setDataTabelaPessoas(pessoasTable, listaPessoas, resultadoPercurso);
+        }
+    }//GEN-LAST:event_percursoPreOrdemButtonActionPerformed
+
+    /**
+     * Executa no clique do botão de percurso em ordem
+     *
+     * @param evt Evento
+     */
+    private void percursoOrdemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_percursoOrdemButtonActionPerformed
+        if (!arvoreConsultaFormFacade.isCheckboxSelected(percursoCheckboxGroup)) {
+            GuiUtils.exibeAlerta(this, MENSAGEM_ERRO_CHECKBOX_SELECAO);
+        } else {
+            List<Integer> resultadoPercurso = getArvorePercursoSelecionada().percursoEmOrdem();
+            arvoreConsultaFormFacade.setDataTabelaPessoas(pessoasTable, listaPessoas, resultadoPercurso);
+        }
+    }//GEN-LAST:event_percursoOrdemButtonActionPerformed
+
+    /**
+     * Executa no clique do botão de percurso em pós-ordem
+     *
+     * @param evt Evento
+     */
+    private void percursoPosOrdemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_percursoPosOrdemButtonActionPerformed
+        if (!arvoreConsultaFormFacade.isCheckboxSelected(percursoCheckboxGroup)) {
+            GuiUtils.exibeAlerta(this, MENSAGEM_ERRO_CHECKBOX_SELECAO);
+        } else {
+            List<Integer> resultadoPercurso = getArvorePercursoSelecionada().percursoPosOrdem();
+            arvoreConsultaFormFacade.setDataTabelaPessoas(pessoasTable, listaPessoas, resultadoPercurso);
+        }
+    }//GEN-LAST:event_percursoPosOrdemButtonActionPerformed
+
+    /**
+     * Retorna a árvore selecionada para exibição do percurso
+     *
+     * @return ArvoreAvl
+     */
+    private ArvoreAvl getArvorePercursoSelecionada() {
+        // Retorna a árvore de acordo com a opção selecionada
+        if (percursoCpfCheck.isSelected()) {
+            return arvoreCpf;
+        } else if (percursoNomeCheck.isSelected()) {
+            return arvoreNome;
+        } else {
+            return arvoreDataNascimento;
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -93,5 +499,31 @@ public class ArvoreConsultaForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cpfActionButton;
+    private javax.swing.JFormattedTextField cpfField;
+    private javax.swing.JLabel cpflabel;
+    private javax.swing.JFormattedTextField dataFinalField;
+    private javax.swing.JLabel dataFinalLabel;
+    private javax.swing.JFormattedTextField dataInicialField;
+    private javax.swing.JLabel dataInicialLabel;
+    private javax.swing.JButton dataNascimentoActionButton;
+    private javax.swing.JLabel dataNascimentoLabel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton nomeActionButton;
+    private javax.swing.JTextField nomeField;
+    private javax.swing.JLabel nomeLabel;
+    private javax.swing.ButtonGroup percursoCheckboxGroup;
+    private javax.swing.JRadioButton percursoCpfCheck;
+    private javax.swing.JRadioButton percursoDataNascCheck;
+    private javax.swing.JRadioButton percursoNomeCheck;
+    private javax.swing.JButton percursoOrdemButton;
+    private javax.swing.JPanel percursoPanel;
+    private javax.swing.JButton percursoPosOrdemButton;
+    private javax.swing.JButton percursoPreOrdemButton;
+    private javax.swing.JPanel pesquisaPanel;
+    private javax.swing.JTable pessoasTable;
     // End of variables declaration//GEN-END:variables
 }

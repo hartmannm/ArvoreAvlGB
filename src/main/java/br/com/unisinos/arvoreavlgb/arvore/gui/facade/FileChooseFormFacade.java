@@ -1,25 +1,36 @@
 package br.com.unisinos.arvoreavlgb.arvore.gui.facade;
 
 import br.com.unisinos.arvoreavlgb.arvore.gui.ArvoreConsultaForm;
-import br.com.unisinos.arvoreavlgb.arvore.gui.utils.GuiUtils;
+import br.com.unisinos.arvoreavlgb.arvore.utils.GuiUtils;
+import br.com.unisinos.arvoreavlgb.pessoa.Pessoa;
+import br.com.unisinos.arvoreavlgb.pessoa.fileReader.PessoaFileReader;
 import java.io.File;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * Classe responsável pela execução de lógicas do componente de seleção de arquivos
+ * Classe responsável pela execução de lógicas do componente de seleção de
+ * arquivos
+ *
  * @author Marcello Augusto Gava
  * @author Mauricio Hartmann
  */
 public class FileChooseFormFacade {
 
-    /** Mensagem de erro - Formato de arquivo inválido */
+    /**
+     * Mensagem de erro - Formato de arquivo inválido
+     */
     private static final String ERRO_FORMATO_ARQUIVO = "Por favor, selecione um arquivo no formato .csv";
-    /** Mensagem de erro - Falha ao abrir componente de seleção de arquivo */
+    /**
+     * Mensagem de erro - Falha ao abrir componente de seleção de arquivo
+     */
     private static final String ERRO_ACESSO_RECURSOS = "Falha ao acessar recursos do sistema";
-    /** Extensão de arquivo .csv */
+    /**
+     * Extensão de arquivo .csv
+     */
     private static final String EXTENSAO_CSV = "csv";
 
     /**
@@ -34,7 +45,7 @@ public class FileChooseFormFacade {
 
     /**
      * Retorna o caminho do arquivo a ser carregado
-     * 
+     *
      * @return String
      * @throws Exception Erro ao abrir componente de seleção de arquivos
      */
@@ -63,15 +74,16 @@ public class FileChooseFormFacade {
      *
      * @param caminhoArquivo Caminho do arquivo a ser carregado
      */
-    public void exibeJanelaConsulta(String caminhoArquivo) {
+    public void exibeJanelaConsulta(String caminhoArquivo) throws Exception {
         ArvoreConsultaForm formConsulta = new ArvoreConsultaForm();
-        formConsulta.setCaminhoArquivo(caminhoArquivo);
+        List<Pessoa> listaPessoas = PessoaFileReader.importPessoasArquivo(caminhoArquivo);
+        formConsulta.setListaPessoas(listaPessoas);
         formConsulta.setVisible(true);
     }
 
     /**
      * Cria e retorna um componente de seleção de arquivos
-     * 
+     *
      * @return JFileChooser
      * @throws Exception Erro ao criar componente
      */

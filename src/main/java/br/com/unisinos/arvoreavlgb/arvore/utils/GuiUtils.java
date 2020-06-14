@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.unisinos.arvoreavlgb.arvore.gui.utils;
+package br.com.unisinos.arvoreavlgb.arvore.utils;
 
 import java.awt.Component;
 import javax.swing.JOptionPane;
 
 /**
  * Classe com rotinas gerais para interface gráfica
+ * 
  * @author Marcello Augusto Gava 
  * @author Mauricio Hartmann
  */
