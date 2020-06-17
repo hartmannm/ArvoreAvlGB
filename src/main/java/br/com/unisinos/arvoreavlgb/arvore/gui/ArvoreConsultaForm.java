@@ -239,7 +239,10 @@ public class ArvoreConsultaForm extends javax.swing.JFrame {
         );
 
         pessoasTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        pessoasTable.setEditingRow(1);
+        pessoasTable.setEditingColumn(0);
+        pessoasTable.setEditingRow(0);
+        pessoasTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        pessoasTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(pessoasTable);
 
         percursoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Percurso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));

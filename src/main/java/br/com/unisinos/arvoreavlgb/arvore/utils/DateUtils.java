@@ -1,5 +1,6 @@
 package br.com.unisinos.arvoreavlgb.arvore.utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,8 +13,8 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    /** Objeto respons[avel por formatar a data */
-    private static final SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+    /** Objeto responsável por formatar a data */
+    private static final DateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Retorna uma data a partir de uma sting

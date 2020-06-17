@@ -5,7 +5,8 @@ import java.util.List;
 
 /**
  * Nó
- * @author Marcello Augusto Gava 
+ *
+ * @author Marcello Augusto Gava
  * @author Mauricio Hartmann
  * @param <T> Tipo de dados do nó
  */
@@ -19,20 +20,24 @@ public class No<T> implements Comparable<No<T>> {
     private T valor;
     /** Índice do nó na lista */
     private Integer indice;
+    /** Chave primária do objeto */
+    private Long chavePrimaria;
     /** Nó filho a esquerda */
     private No<T> noEsquerdo;
     /** Nó filho a direita */
     private No<T> noDireito;
 
-    public No(T valor) {
+    public No(T valor, Long chavePrimaria) {
         this.valor = valor;
+        this.chavePrimaria = chavePrimaria;
         altura = 1;
         this.noEsquerdo = this.noDireito = null;
     }
 
-    public No(T valor, int indice) {
+    public No(T valor, int indice, Long chavePrimaria) {
         this.indice = indice;
         this.valor = valor;
+        this.chavePrimaria = chavePrimaria;
         altura = 1;
         this.noEsquerdo = this.noDireito = null;
     }
@@ -55,6 +60,14 @@ public class No<T> implements Comparable<No<T>> {
 
     public void setIndice(Integer indice) {
         this.indice = indice;
+    }
+
+    public Long getChavePrimaria() {
+        return chavePrimaria;
+    }
+
+    public void setChavePrimaria(Long chavePrimaria) {
+        this.chavePrimaria = chavePrimaria;
     }
 
     public No<T> getNoEsquerdo() {
@@ -126,6 +139,10 @@ public class No<T> implements Comparable<No<T>> {
             resultado = ((Long) valor).compareTo((Long) no.getValor());
         } else if (valor instanceof Date) {
             resultado = ((Date) valor).compareTo((Date) no.getValor());
+        }
+        // Se o valor dos nós for igual
+        if (resultado == 0) {
+            return this.chavePrimaria == no.chavePrimaria ? resultado : -1;
         }
         return resultado;
     }
@@ -268,7 +285,7 @@ public class No<T> implements Comparable<No<T>> {
                     return this.noDireito;
                 } else {
                     this.valor = (T) (this.noDireito.getNoEsquerdo()).getValor();
-                    this.noDireito.remover(new No<T>(this.valor));
+                    this.noDireito.remover(new No<T>(this.valor, this.chavePrimaria));
                 }
             } else if (this.possuiNoEsquerdo()) {
                 // Se possui nó esquerdo
@@ -345,21 +362,21 @@ public class No<T> implements Comparable<No<T>> {
     /**
      * Preenche uma lista com os valores que iniciam com o valor pesquisado
      *
-     * @param filtroPesquisa Nome a ser pesquisado
+     * @param nome Nome a ser pesquisado
      * @param lista Lista a ser preenchida
      */
-    public void buscaPorNome(String filtroPesquisa, List<Integer> lista) {
+    public void buscaPorNome(String nome, List<Integer> lista) {
         // Se possui nó esquerdo
         if (possuiNoEsquerdo()) {
-            noEsquerdo.buscaPorNome(filtroPesquisa, lista);
+            noEsquerdo.buscaPorNome(nome, lista);
         }
         // Se o nome inicia com o valor pesquisado
-        if (((String) this.valor).toLowerCase().startsWith(filtroPesquisa.toLowerCase())) {
+        if (((String) this.valor).toLowerCase().startsWith(nome.toLowerCase())) {
             lista.add(this.indice);
         }
         // Se possui nó direito
         if (possuiNoDireito()) {
-            noDireito.buscaPorNome(filtroPesquisa, lista);
+            noDireito.buscaPorNome(nome, lista);
         }
     }
 
@@ -385,6 +402,26 @@ public class No<T> implements Comparable<No<T>> {
             // Se possui nó a direita
             if (possuiNoDireito()) {
                 return noDireito.buscaPorCpf(cpf);
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public Integer buscaPorChaveprimaria(No<T> no) {
+        if (this.chavePrimaria.equals(no.getChavePrimaria())) {
+            return this.indice;
+        } else if (this.compareTo(no) > 0) {
+            if (this.possuiNoEsquerdo()) {
+                return this.noEsquerdo.buscaPorChaveprimaria(no);
+            } else {
+                return null;
+            }
+        } else if (this.compareTo(no) < 0) {
+            if (this.possuiNoDireito()) {
+                return this.noDireito.buscaPorChaveprimaria(no);
             } else {
                 return null;
             }

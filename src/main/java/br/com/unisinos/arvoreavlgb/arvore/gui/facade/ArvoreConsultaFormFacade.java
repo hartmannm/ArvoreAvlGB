@@ -19,7 +19,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Classe responsável pela execução de lógicas do componente de consulta de pessoas
+ * Classe responsável pela execução de lógicas do componente de consulta de
+ * pessoas
  *
  * @author Marcello Augusto Gava
  * @author Mauricio Hartmann
@@ -43,7 +44,7 @@ public class ArvoreConsultaFormFacade {
 
     /**
      * Popula as árvores de acordo com a lista informada
-     * 
+     *
      * @param listaPessoas Lista de pessoas
      * @param arvoreCpf Árvore CPF
      * @param arvoreNome Árvore Nome
@@ -54,9 +55,9 @@ public class ArvoreConsultaFormFacade {
         // Percorre a lista de pessoas e popula as árvores
         listaPessoas.forEach((Pessoa pessoa) -> {
             Integer indice = listaPessoas.indexOf(pessoa);
-            arvoreCpf.inserir(pessoa.getCpf(), indice);
-            arvoreNome.inserir(pessoa.getNome(), indice);
-            arvoreDataNascimento.inserir(pessoa.getDataNascimento(), indice);
+            arvoreCpf.inserir(pessoa.getCpf(), indice, pessoa.getCpf());
+            arvoreNome.inserir(pessoa.getNome(), indice, pessoa.getCpf());
+            arvoreDataNascimento.inserir(pessoa.getDataNascimento(), indice, pessoa.getCpf());
         });
     }
 

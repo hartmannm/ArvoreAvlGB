@@ -24,17 +24,21 @@ public class ArvoreAvl<T> {
      *
      * @param valor Valor do nó
      * @param indice Índice do nó em uma lista
+     * @param chavePrimaria Chave primária do nó
      */
-    public void inserir(T valor, Integer indice) {
-        No aux = new No(valor, indice);
+    public void inserir(T valor, Integer indice, Long chavePrimaria) {
+        No aux = new No(valor, indice, chavePrimaria);
         // Se não possui raiz
         if (root == null) {
             root = aux;
         } else {
-            aux = root.inserir(aux);
-        }
-        if (aux != null) {
-            root = aux;
+            // Se a entidade ainda não está presente na árvore
+            if (root.buscaPorChaveprimaria(aux) == null) {
+                aux = root.inserir(aux);
+                if (aux != null) {
+                    root = aux;
+                }
+            }
         }
     }
 
@@ -42,9 +46,10 @@ public class ArvoreAvl<T> {
      * Remove um nó da árvore
      *
      * @param valor Valor do nó a ser removido
+     * @param chavePrimaria Chave primária do nó
      */
-    public void remover(T valor) {
-        No<T> temp = root.remover(new No<T>(valor));
+    public void remover(T valor, Long chavePrimaria) {
+        No<T> temp = root.remover(new No<T>(valor, chavePrimaria));
         // Se já existe um nó com o mesmo valor
         if (temp == root) {
             this.root = null;

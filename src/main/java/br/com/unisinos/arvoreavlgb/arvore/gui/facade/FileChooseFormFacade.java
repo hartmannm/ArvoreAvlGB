@@ -20,17 +20,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class FileChooseFormFacade {
 
-    /**
-     * Mensagem de erro - Formato de arquivo inválido
-     */
+    /** Mensagem de erro - Formato de arquivo inválido */
     private static final String ERRO_FORMATO_ARQUIVO = "Por favor, selecione um arquivo no formato .csv";
-    /**
-     * Mensagem de erro - Falha ao abrir componente de seleção de arquivo
-     */
+    /** Mensagem de erro - Falha ao abrir componente de seleção de arquivo */
     private static final String ERRO_ACESSO_RECURSOS = "Falha ao acessar recursos do sistema";
-    /**
-     * Extensão de arquivo .csv
-     */
+    /** Extensão de arquivo .csv */
     private static final String EXTENSAO_CSV = "csv";
 
     /**

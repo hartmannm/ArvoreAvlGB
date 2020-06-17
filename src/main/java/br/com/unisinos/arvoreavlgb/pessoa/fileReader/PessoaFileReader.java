@@ -1,18 +1,18 @@
 package br.com.unisinos.arvoreavlgb.pessoa.fileReader;
 
+import br.com.unisinos.arvoreavlgb.arvore.utils.DateUtils;
 import br.com.unisinos.arvoreavlgb.pessoa.Pessoa;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Classe responsável por ler o arquivo de pessoas
+ * 
  * @author Marcello Augusto Gava 
  * @author Mauricio Hartmann
  */
@@ -28,8 +28,6 @@ public class PessoaFileReader {
     private static final int DATA_NASC_INDEX = 3;
     /** Índice - Nome da cidade de nascimento */
     private static final int CIDADE_NASC_INDEX = 4;
-    /** Formato para conversão da data de nascimento */
-    private static final String FORMATO_DATA_NASCIMENTO = "dd/MM/yyyy";
 
     /**
      * Retorna uma lista de pessoas a partir de um arquivo
@@ -41,13 +39,12 @@ public class PessoaFileReader {
     public static List<Pessoa> importPessoasArquivo(String caminhoArquivo) throws Exception {
         List<Pessoa> lista = new ArrayList();
         String linha;
-        SimpleDateFormat formater = new SimpleDateFormat(FORMATO_DATA_NASCIMENTO);
         // Abre o arquivo e inicia a leitura
         try (BufferedReader csvReader = new BufferedReader(new InputStreamReader(
                 new FileInputStream(caminhoArquivo), "UTF-8"))) {
             // Lê as linhas do arquivo
             while ((linha = csvReader.readLine()) != null) {
-                lista.add(parsePessoa(linha, formater));
+                lista.add(parsePessoa(linha));
             }
         } catch (IOException e) {
             throw new Exception("Erro ao ler arquivo, verifique o caminho informado");
@@ -61,11 +58,10 @@ public class PessoaFileReader {
      * Converte os dados de uma linha em uma Pessoa
      *
      * @param linhaPessoa Linha a ser convertida
-     * @param formater Formatador de datas
-     * @return Pessoa
+     * @return Pessoa Pessoa
      * @throws ParseException Erro ao fazer parse da data de nascimento
      */
-    private static Pessoa parsePessoa(String linhaPessoa, DateFormat formater)
+    private static Pessoa parsePessoa(String linhaPessoa)
             throws ParseException {
         Pessoa pessoa = new Pessoa();
         // Divide a linha no caractere de ";"
@@ -74,7 +70,7 @@ public class PessoaFileReader {
         pessoa.setRg(Long.valueOf(pessoaArray[RG_INDEX]));
         pessoa.setNome(pessoaArray[NOME_INDEX]);
         pessoa.setCidadeNascimento(pessoaArray[CIDADE_NASC_INDEX]);
-        pessoa.setDataNascimento(formater.parse(pessoaArray[DATA_NASC_INDEX]));
+        pessoa.setDataNascimento(DateUtils.getDataFromString(pessoaArray[DATA_NASC_INDEX]));
         return pessoa;
     }
 
