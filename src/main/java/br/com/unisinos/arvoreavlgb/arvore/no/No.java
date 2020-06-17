@@ -350,7 +350,7 @@ public class No<T> implements Comparable<No<T>> {
             noEsquerdo.buscaPorData(dataInicial, dataFinal, lista);
         }
         // Se a data está entre a data inicial e final
-        if (((Date) this.valor).before(dataFinal) && ((Date) this.valor).after(dataInicial)) {
+        if (dataInicial.compareTo((Date) this.valor) * ((Date) this.valor).compareTo(dataFinal) >= 0) {
             lista.add(this.indice);
         }
         // Se possui nó direito
