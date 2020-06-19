@@ -4,8 +4,8 @@ import java.util.Date;
 
 /**
  * Entidade Pessoa
- * 
- * @author Marcello Augusto Gava 
+ *
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  */
 public class Pessoa {

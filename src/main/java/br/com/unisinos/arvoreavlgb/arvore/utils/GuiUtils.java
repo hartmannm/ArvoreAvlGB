@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 
 /**
  * Classe com rotinas gerais para interface gráfica
- * 
- * @author Marcello Augusto Gava 
+ *
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  */
 public class GuiUtils {

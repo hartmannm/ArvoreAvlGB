@@ -5,7 +5,7 @@ import br.com.unisinos.arvoreavlgb.arvore.gui.FileChooserForm;
 /**
  * Classe responsável por executar a aplicação
  *
- * @author Marcello Augusto Gava
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  */
 public class Main {

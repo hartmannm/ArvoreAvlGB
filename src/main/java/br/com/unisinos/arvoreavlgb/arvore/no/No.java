@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Nó
  *
- * @author Marcello Augusto Gava
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  * @param <T> Tipo de dados do nó
  */

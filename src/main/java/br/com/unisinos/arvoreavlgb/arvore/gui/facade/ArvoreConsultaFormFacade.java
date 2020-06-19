@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
  * Classe responsável pela execução de lógicas do componente de consulta de
  * pessoas
  *
- * @author Marcello Augusto Gava
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  */
 public class ArvoreConsultaFormFacade {

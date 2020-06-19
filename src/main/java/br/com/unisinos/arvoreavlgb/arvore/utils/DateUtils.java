@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Classes com rotinas gerais para manipulação de datas
  *
- * @author Marcello Augusto Gava
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  */
 public class DateUtils {

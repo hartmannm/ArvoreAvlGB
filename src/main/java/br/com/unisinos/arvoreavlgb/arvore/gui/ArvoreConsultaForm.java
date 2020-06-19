@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Componente para consulta dos dados do arquivo
  *
- * @author Marcello Augusto Gava
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  */
 public class ArvoreConsultaForm extends javax.swing.JFrame {

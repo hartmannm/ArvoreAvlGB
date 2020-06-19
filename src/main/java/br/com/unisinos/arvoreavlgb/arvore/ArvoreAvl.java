@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Árvore AVL
  *
- * @author Marcello Augusto Gava
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  * @param <T> Tipo de dado da árvore
  */

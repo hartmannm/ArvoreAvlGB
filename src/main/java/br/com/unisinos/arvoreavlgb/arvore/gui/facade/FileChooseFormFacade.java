@@ -15,7 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * Classe responsável pela execução de lógicas do componente de seleção de
  * arquivos
  *
- * @author Marcello Augusto Gava
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  */
 public class FileChooseFormFacade {

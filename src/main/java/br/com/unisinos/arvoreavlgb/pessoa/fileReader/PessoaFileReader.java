@@ -12,8 +12,8 @@ import java.util.List;
 
 /**
  * Classe responsável por ler o arquivo de pessoas
- * 
- * @author Marcello Augusto Gava 
+ *
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  */
 public class PessoaFileReader {

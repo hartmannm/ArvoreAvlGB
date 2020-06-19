@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 /**
  * Componente responsável pela seleção de arquivos
  *
- * @author Marcello Augusto Gava
+ * @author Marcelo Augusto Gava
  * @author Mauricio Hartmann
  */
 public class FileChooserForm extends JFrame {
